@@ -1,26 +1,243 @@
-(* Content-type: application/vnd.wolfram.mathematica *)
-
-(*** Wolfram Notebook File ***)
-(* http://www.wolfram.com/nb *)
-
-(* CreatedBy='Wolfram 15.0' *)
-
 (*CacheID: 234*)
 (* Internal cache information:
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
-NotebookDataPosition[       154,          7]
-NotebookDataLength[       816,         34]
-NotebookOptionsPosition[       557,         21]
-NotebookOutlinePosition[       952,         37]
-CellTagsIndexPosition[       909,         34]
+NotebookDataPosition[         0,          0]
+NotebookDataLength[      9226,        262]
+NotebookOptionsPosition[      8562,        237]
+NotebookOutlinePosition[      8987,        254]
+CellTagsIndexPosition[      8944,        251]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
+    "=="}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "1.", " ", "IMPLEMENTAZIONE", " ", "DELLA", " ", "PRIMITIVA", " ", 
+     "GIFT"}], "-", 
+    RowBox[{"64", " ", 
+     RowBox[{"(", 
+      RowBox[{"ROUND", " ", "PARAMETRICO"}], ")"}]}]}], "*)"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
+    "=="}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{"S", "-", 
+    RowBox[{"box", " ", "di", " ", "GIFT", " ", "a", " ", "4", " ", "bit"}]}],
+    "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"GiftSBox", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "10", ",", "4", ",", "12", ",", "6", ",", "15", ",", "3", ",",
+        "9", ",", "2", ",", "13", ",", "11", ",", "7", ",", "5", ",", "0", ",",
+        "8", ",", "14"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"GiftSBoxInv", "=", 
+     RowBox[{
+      RowBox[{"Ordering", "[", "GiftSBox", "]"}], "-", "1"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Permutazione", " ", "dei", " ", "bit", " ", 
+      RowBox[{"(", "PermBits", ")"}], " ", "di", " ", "GIFT"}], "-", "64"}], 
+    "*)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Formula", ":", 
+      RowBox[{"P", 
+       RowBox[{"(", "i", ")"}]}]}], "=", 
+     RowBox[{
+      RowBox[{"4", "*", 
+       RowBox[{"Floor", "[", 
+        RowBox[{"i", "/", "16"}], "]"}]}], "+", 
+      RowBox[{"16", "*", 
+       RowBox[{"Mod", "[", 
+        RowBox[{
+         RowBox[{"3", "*", 
+          RowBox[{"Floor", "[", 
+           RowBox[{
+            RowBox[{"Mod", "[", 
+             RowBox[{"i", ",", "16"}], "]"}], "/", "4"}], "]"}]}], ",", "4"}],
+         "]"}]}], "+", 
+      RowBox[{"Mod", "[", 
+       RowBox[{"i", ",", "4"}], "]"}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GiftPermutation", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"4", "*", 
+         RowBox[{"Floor", "[", 
+          RowBox[{"i", "/", "16"}], "]"}]}], "+", 
+        RowBox[{"16", "*", 
+         RowBox[{"Mod", "[", 
+          RowBox[{
+           RowBox[{"3", "*", 
+            RowBox[{"Floor", "[", 
+             RowBox[{
+              RowBox[{"Mod", "[", 
+               RowBox[{"i", ",", "16"}], "]"}], "/", "4"}], "]"}]}], ",", 
+           "4"}], "]"}]}], "+", 
+        RowBox[{"Mod", "[", 
+         RowBox[{"i", ",", "4"}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", "63"}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"GiftPermutationInv", "=", 
+     RowBox[{
+      RowBox[{"Ordering", "[", 
+       RowBox[{"GiftPermutation", "+", "1"}], "]"}], "-", "1"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Funzioni", " ", "di", " ", "utilit\[AGrave]", " ", "per", " ", 
+      "conversione", " ", "Stato"}], "<->", 
+     RowBox[{"Bit", "/", "Nibble"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"StateToBits", "[", "state_Integer", "]"}], ":=", 
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{"state", ",", "2", ",", "64"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"BitsToState", "[", "bits_List", "]"}], ":=", 
+     RowBox[{"FromDigits", "[", 
+      RowBox[{"bits", ",", "2"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"StateToNibbles", "[", "state_Integer", "]"}], ":=", 
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{"state", ",", "16", ",", "16"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"NibblesToState", "[", "nibbles_List", "]"}], ":=", 
+     RowBox[{"FromDigits", "[", 
+      RowBox[{"nibbles", ",", "16"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\n", 
+   RowBox[{"(*", 
+    RowBox[{"S", "-", 
+     RowBox[{"box", " ", "Layer"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SubCells", "[", "state_Integer", "]"}], ":=", 
+     RowBox[{"NibblesToState", "[", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"GiftSBox", "[", 
+          RowBox[{"[", 
+           RowBox[{"#", "+", "1"}], "]"}], "]"}], "&"}], ",", 
+        RowBox[{"StateToNibbles", "[", "state", "]"}]}], "]"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"PermBits", " ", "Layer"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"PermBits", "[", "state_Integer", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"bits", ",", "permuted"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"bits", "=", 
+         RowBox[{"Reverse", "[", 
+          RowBox[{"StateToBits", "[", "state", "]"}], "]"}]}], ";", 
+        RowBox[{"(*", 
+         RowBox[{"LSB", " ", "a", " ", "indice", " ", "1"}], "*)"}], 
+        RowBox[{"permuted", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"bits", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"GiftPermutation", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], "+", "1"}], "]"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", "0", ",", "63"}], "}"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"BitsToState", "[", 
+         RowBox[{"Reverse", "[", "permuted", "]"}], "]"}]}]}], "]"}]}], ";"}],
+    "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Singolo", " ", "Round", " ", "di", " ", "GIFT"}], "-", 
+     RowBox[{"64", " ", 
+      RowBox[{"(", 
+       RowBox[{
+       "semplificato", " ", "senza", " ", "costanti", " ", "per", " ", 
+        "analisi", " ", "differenziale"}], ")"}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Gift64Round", "[", 
+      RowBox[{"state_Integer", ",", "roundKey_Integer"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"s", ",", "p"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"s", "=", 
+         RowBox[{"SubCells", "[", "state", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"p", "=", 
+         RowBox[{"PermBits", "[", "s", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"BitXor", "[", 
+         RowBox[{"p", ",", "roundKey"}], "]"}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Cifratura", " ", "a", " ", "r", " ", "round"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Gift64Encrypt", "[", 
+      RowBox[{"plaintext_Integer", ",", "roundKeys_List", ",", "r_Integer"}], 
+      "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"state", "=", "plaintext"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{"state", "=", 
+           RowBox[{"Gift64Round", "[", 
+            RowBox[{"state", ",", 
+             RowBox[{"roundKeys", "[", 
+              RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", "r"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", "state"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+   "aggiungi", " ", "la", " ", "parte", " ", "che", " ", "mi", " ", "fa", " ",
+     "verificare", " ", "il", " ", "funzionamento", " ", "col", " ", 
+    "cifrario", " ", "ufficiale"}]}]}]], "Input",
+ CellChangeTimes->{{3.9992377192962418`*^9, 3.9992377192962418`*^9}},
+ CellLabel->"In[48]:=",ExpressionUUID->"426a5fa5-9a8b-ef43-84f9-a6797aed1142"],
+
+Cell[BoxData[
+ RowBox[{"aggiungi", " ", "che", " ", "cifrario", " ", "col", " ", "fa", " ", 
+  "funzionamento", " ", "il", " ", "la", " ", "mi", " ", "parte", " ", 
+  "ufficiale", " ", "verificare"}]], "Output",
+ CellChangeTimes->{3.999237720113909*^9},
+ CellLabel->"Out[60]=",ExpressionUUID->"76dec19c-a706-7946-a8d4-28e37de14402"]
+}, Open  ]]
 },
 WindowSize->{949, 521},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>0.8 Inherited,
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"02f1c705-a3d2-a847-913c-0d7e0237d243"
@@ -36,9 +253,11 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[CellGroupData[{
+Cell[422, 15, 7789, 212, 509, "Input",ExpressionUUID->"426a5fa5-9a8b-ef43-84f9-a6797aed1142"],
+Cell[8214, 229, 332, 5, 25, "Output",ExpressionUUID->"76dec19c-a706-7946-a8d4-28e37de14402"]
+}, Open  ]]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
