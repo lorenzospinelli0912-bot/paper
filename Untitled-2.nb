@@ -1,0 +1,181 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      6454,        171]
+NotebookOptionsPosition[      5788,        152]
+NotebookOutlinePosition[      6183,        168]
+CellTagsIndexPosition[      6140,        165]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Fase", " ", "1"}], ":", 
+    RowBox[{"Tabelle", " ", "Statiche", " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"S", "-", 
+        RowBox[{"Box", " ", "e", " ", "Permutazione"}]}], ")"}], "[", "]"}], " ",
+      "Step", " ", "1.1"}], ":", 
+    RowBox[{
+     RowBox[{"Definire", " ", "la", " ", "S"}], "-", 
+     RowBox[{
+     "Box", "\[IndentingNewLine]", "Crea", " ", "la", " ", "lista", " ", 
+      "GiftSBox", " ", "con", " ", "le", " ", "16", " ", "sostituzioni", " ", 
+      "di", " ", 
+      RowBox[{"GIFT", ":", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "1", ",", "10", ",", "4", ",", "12", ",", "6", ",", "15", ",", "3", 
+           ",", "9", ",", "2", ",", "13", ",", "11", ",", "7", ",", "5", ",", 
+           "0", ",", "8", ",", "14"}], "}"}], ".", "\[IndentingNewLine]", 
+         RowBox[{"[", "]"}]}], " ", "Step", " ", "1.2"}], ":", 
+       RowBox[{
+        RowBox[{"Generare", " ", "la", " ", "S"}], "-", 
+        RowBox[{
+        "Box", " ", "Inversa", "\[IndentingNewLine]", "Crea", " ", 
+         "GiftSBoxInv", " ", "usando", " ", "la", " ", "funzione", " ", 
+         RowBox[{"Ordering", "[", "...", "]"}]}], "-", 
+        RowBox[{
+         RowBox[{"1.", "[", "]"}], " ", "\[IndentingNewLine]", "Step", " ", 
+         "1.3"}]}], ":", 
+       RowBox[{
+       "Generare", " ", "la", " ", "Permutazione", " ", "dei", " ", "Bit", "\[IndentingNewLine]",
+         "Usa", " ", "Table", " ", "da", " ", "\[IndentingNewLine]", 
+        "i"}]}]}]}]}], "=", 
+   RowBox[{
+    RowBox[{
+    "0", " ", "a", " ", "63", " ", "applicando", " ", "la", " ", "formula", " ",
+      "$P", 
+     RowBox[{"(", "i", ")"}]}], "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"4", "\\", "lfloor"}], " ", 
+       RowBox[{"i", "/", "16"}], " ", "\\r", "floor"}], "+", 
+      RowBox[{"16", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"3", "\\", "lfloor"}], " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"i", "\\", "bmod"}], " ", "16"}], ")"}], "/", "4"}], " ", 
+         "\\r", 
+         RowBox[{"floor", "\\", "bmod"}], " ", "4"}], ")"}]}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"i", "\\", "bmod"}], " ", "4"}], ")"}], "$", " ", "con", " ",
+        "Floor", " ", "e", " ", 
+       RowBox[{"Mod", ".", 
+        RowBox[{"[", "]"}]}], " ", "Step", " ", "1.4"}]}], ":", 
+     RowBox[{
+     "Generare", " ", "la", " ", "Permutazione", " ", "InversaCrea", " ", 
+      "GiftPermutationInv", " ", "riadattando", " ", "gli", " ", "indici", " ",
+       "con", " ", 
+      RowBox[{
+       RowBox[{"Ordering", "[", "...", "]"}], "."}]}]}]}]}], 
+  "\[IndentingNewLine]", "*)"}]], "Input",
+ CellChangeTimes->{{3.9992643765806656`*^9, 3.9992644109793816`*^9}, {
+  3.999264460877659*^9, 
+  3.999264485688452*^9}},ExpressionUUID->"d39d3667-63d4-6142-8104-\
+98e6d406b475"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"GiftSBox", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "10", ",", "4", ",", "12", ",", "6", ",", "15", ",", "3", ",",
+        "9", ",", "2", ",", "13", ",", "11", ",", "7", ",", "5", ",", "0", ",",
+        "8", ",", "14"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GiftSBoxInversa", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"First", "[", 
+        RowBox[{
+         RowBox[{"Position", "[", 
+          RowBox[{"GiftSBox", ",", "i"}], "]"}], "-", "1"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", 
+         RowBox[{
+          RowBox[{"Length", "[", "GiftSBox", "]"}], "-", "1"}]}], "}"}]}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{
+  3.9992644193797436`*^9, {3.9992645088572407`*^9, 3.9992645321569767`*^9}, {
+   3.999265294504141*^9, 3.999265308620846*^9}, {3.999265641650875*^9, 
+   3.9992656680120296`*^9}, {3.9992657292385483`*^9, 3.999265777974024*^9}, {
+   3.9992658674900875`*^9, 3.9992658985331917`*^9}, {3.999265941713812*^9, 
+   3.9992659516657276`*^9}, {3.9992697929722805`*^9, 
+   3.9992699032638073`*^9}, {3.999269967738207*^9, 3.9992700103613415`*^9}, {
+   3.9992702121262074`*^9, 3.999270230646122*^9}, {3.99927033943046*^9, 
+   3.9992704408380013`*^9}, {3.9992712473022156`*^9, 3.999271253505556*^9}, {
+   3.9992713759548492`*^9, 3.9992714258786983`*^9}, {3.999271472403965*^9, 
+   3.99927148534144*^9}},
+ CellLabel->"In[28]:=",ExpressionUUID->"701ad6fc-8aed-8a4a-abb3-942249a1c728"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[" "], "Input",
+ CellChangeTimes->{{3.999270908299841*^9, 3.9992709136228123`*^9}, {
+   3.9992709866196327`*^9, 3.9992709903384304`*^9}, 
+   3.999271481540739*^9},ExpressionUUID->"d27b43c4-00e3-f74d-98f2-\
+7f83100a58cd"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", "16", "}"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.9992658777483997`*^9, 3.9992699054873104`*^9, {3.999269971821825*^9, 
+   3.9992700112072678`*^9}, 3.999270233754328*^9, {3.9992703448692055`*^9, 
+   3.999270374142275*^9}},
+ CellLabel->"Out[19]=",ExpressionUUID->"6f82dd2e-6e12-4e4d-a81a-2186592dae67"]
+}, Open  ]]
+},
+WindowSize->{949, 521},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"69cb0b13-c4c8-b641-99d0-a349380679ab"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 2995, 76, 218, "Input",ExpressionUUID->"d39d3667-63d4-6142-8104-98e6d406b475"],
+Cell[3552, 98, 1610, 34, 85, "Input",ExpressionUUID->"701ad6fc-8aed-8a4a-abb3-942249a1c728"],
+Cell[CellGroupData[{
+Cell[5187, 136, 232, 4, 28, "Input",ExpressionUUID->"d27b43c4-00e3-f74d-98f2-7f83100a58cd"],
+Cell[5422, 142, 350, 7, 32, "Output",ExpressionUUID->"6f82dd2e-6e12-4e4d-a81a-2186592dae67"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
