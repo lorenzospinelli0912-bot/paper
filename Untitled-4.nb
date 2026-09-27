@@ -10,48 +10,27 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[      6050,        161]
-NotebookOptionsPosition[      5697,        147]
-NotebookOutlinePosition[      6092,        163]
-CellTagsIndexPosition[      6049,        160]
+NotebookDataLength[     10441,        288]
+NotebookOptionsPosition[      9704,        266]
+NotebookOutlinePosition[     10135,        283]
+CellTagsIndexPosition[     10092,        280]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{
   RowBox[{"(*", 
    RowBox[{
-   "1.", " ", "Inizializzazione", " ", "dello", " ", "Stato", " ", "della", " ",
-     "Chiave", " ", 
-    RowBox[{"(", 
-     RowBox[{"Step", " ", "1"}], ")"}]}], "*)"}], 
-  RowBox[{"(*", 
-   RowBox[{
-   "Accetta", " ", "una", " ", "chiave", " ", "a", " ", "128", " ", "bit", " ", 
-    RowBox[{"(", 
-     RowBox[{"lista", " ", "di", " ", "128", " ", "bit"}], ")"}], " ", "e", " ",
-     "restituisce", " ", "8", " ", "parole", " ", "da", " ", "16", " ", 
-    "bit"}], "*)"}], 
+   "1.", " ", "Definizioni", " ", "delle", " ", "funzioni", " ", "del", " ", 
+    "Key", " ", "Schedule"}], "*)"}], "\[IndentingNewLine]", 
   RowBox[{
    RowBox[{
     RowBox[{"InitializeKeySchedule", "[", "masterKey128_List", "]"}], ":=", 
     RowBox[{"Partition", "[", 
-     RowBox[{"masterKey128", ",", "16"}], "]"}]}], "\[IndentingNewLine]", 
-   "\n", 
-   RowBox[{"(*", 
-    RowBox[{
-    "2.", " ", "Estrazione", " ", "delle", " ", "Sottochiavi", " ", "di", " ",
-      "Round", " ", "U", " ", "e", " ", "V", " ", 
-     RowBox[{"(", 
-      RowBox[{"Step", " ", "2"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", 
-    RowBox[{"K", " ", 
-     RowBox[{"e", "'"}], " ", "la", " ", "lista", " ", 
-     RowBox[{"{", 
-      RowBox[{
-      "k7", ",", "k6", ",", "k5", ",", "k4", ",", "k3", ",", "k2", ",", "k1", 
-       ",", "k0"}], "}"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"masterKey128", ",", "16"}], "]"}]}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{"ExtractRoundKeys", "[", "K_List", "]"}], ":=", 
     RowBox[{"{", 
@@ -59,94 +38,235 @@ Cell[BoxData[
       RowBox[{"K", "[", 
        RowBox[{"[", "7", "]"}], "]"}], ",", 
       RowBox[{"K", "[", 
-       RowBox[{"[", "8", "]"}], "]"}]}], "}"}]}], "\n", "\[IndentingNewLine]",
-    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   RowBox[{"(*", 
-    RowBox[{
-     RowBox[{"Step", " ", "3"}], ":", 
-     RowBox[{
-     "Mappatura", " ", "che", " ", "riceve", " ", "direttamente", " ", "U", " ",
-       "e", " ", "V"}]}], "*)"}], "\[IndentingNewLine]", 
-   RowBox[{"(*", 
-    RowBox[{
-     RowBox[{"Lascia", " ", "inalterate", " ", 
-      RowBox[{"(", 
-       RowBox[{"a", " ", "0", " ", "nella", " ", "maschera"}], ")"}], " ", 
-      "le", " ", "posizioni", " ", "$4j"}], "+", 
-     RowBox[{"2", "$", " ", "e", " ", "$4j"}], "+", 
-     RowBox[{"3", 
-      RowBox[{"$", "."}]}]}], "*)"}], "\[IndentingNewLine]", " ", 
+       RowBox[{"[", "8", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]", "\n", 
    RowBox[{
-    RowBox[{"AddRoundKey", "[", 
-     RowBox[{"state64_List", ",", "U_List", ",", "V_List"}], "]"}], ":=", 
-    "Module"}], "\[IndentingNewLine]", 
-   RowBox[{"[", "\[IndentingNewLine]", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"keyMask", ",", "newState"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"UpdateKeySchedule", "[", "K_List", "]"}], ":=", 
+    RowBox[{"{", 
      RowBox[{
-      RowBox[{"keyMask", "=", 
-       RowBox[{"Table", "[", 
-        RowBox[{"0", ",", 
-         RowBox[{"{", "64", "}"}]}], "]"}]}], ";", "  ", 
-      RowBox[{"(*", 
-       RowBox[{"vettore", " ", "lista", " ", "nullo"}], "*)"}], 
-      "\[IndentingNewLine]", 
-      RowBox[{"Do", "[", " ", "\[IndentingNewLine]", "    ", 
+      RowBox[{"RotateRight", "[", 
        RowBox[{
-        RowBox[{
-         RowBox[{"keyMask", "[", 
-          RowBox[{"[", 
-           RowBox[{
-            RowBox[{"4", "*", "j"}], "+", "1"}], "]"}], "]"}], "=", 
-         RowBox[{"V", "[", 
-          RowBox[{"[", 
-           RowBox[{"j", "+", "1"}], "]"}], "]"}]}], ",", 
-        RowBox[{"{", 
-         RowBox[{"j", ",", "0", ",", "15"}], "}"}]}], "   ", 
+        RowBox[{"K", "[", 
+         RowBox[{"[", "7", "]"}], "]"}], ",", "2"}], "]"}], ",", 
+      RowBox[{"RotateRight", "[", 
+       RowBox[{
+        RowBox[{"K", "[", 
+         RowBox[{"[", "8", "]"}], "]"}], ",", "12"}], "]"}], ",", 
+      RowBox[{"K", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"K", "[", 
+       RowBox[{"[", "2", "]"}], "]"}], ",", 
+      RowBox[{"K", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], ",", 
+      RowBox[{"K", "[", 
+       RowBox[{"[", "4", "]"}], "]"}], ",", 
+      RowBox[{"K", "[", 
+       RowBox[{"[", "5", "]"}], "]"}], ",", 
+      RowBox[{"K", "[", 
+       RowBox[{"[", "6", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"GenerateAllRoundKeys", "[", "masterKey128_List", "]"}], ":=", 
+    RowBox[{"Map", "[", 
+     RowBox[{"ExtractRoundKeys", ",", 
+      RowBox[{"NestList", "[", 
+       RowBox[{"UpdateKeySchedule", ",", 
+        RowBox[{"InitializeKeySchedule", "[", "masterKey128", "]"}], ",", 
+        "27"}], "]"}]}], "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Tabella", " ", "delle", " ", "costanti", " ", "dal", " ", "paper", " ", 
+     "di", " ", "GIFT"}], "*)"}], 
+   RowBox[{
+    RowBox[{"hexConstants", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<01\>\"", ",", "\"\<03\>\"", ",", "\"\<07\>\"", 
+       ",", "\"\<0F\>\"", ",", "\"\<1F\>\"", ",", "\"\<3E\>\"", 
+       ",", "\"\<3D\>\"", ",", "\"\<3B\>\"", ",", "\"\<37\>\"", 
+       ",", "\"\<2F\>\"", ",", "\"\<1E\>\"", ",", "\"\<3C\>\"", 
+       ",", "\"\<39\>\"", ",", "\"\<33\>\"", ",", "\"\<27\>\"", 
+       ",", "\"\<0E\>\"", ",", 
        RowBox[{"(*", 
         RowBox[{
-        "Il", " ", "ciclo", " ", "viene", " ", "eseguito", " ", "16", " ", 
-         "volte"}], "*)"}], "\[IndentingNewLine]", "  ", "]"}], ";", 
-      "\[IndentingNewLine]", 
-      RowBox[{"Do", "[", "\[IndentingNewLine]", "    ", 
+         RowBox[{"Rounds", " ", "1"}], "-", "16"}], "*)"}], "\"\<1D\>\"", 
+       ",", "\"\<3A\>\"", ",", "\"\<35\>\"", ",", "\"\<2B\>\"", 
+       ",", "\"\<16\>\"", ",", "\"\<2C\>\"", ",", "\"\<18\>\"", 
+       ",", "\"\<30\>\"", ",", "\"\<21\>\"", ",", "\"\<02\>\"", 
+       ",", "\"\<05\>\"", ",", "\"\<0B\>\""}], "                         ", 
+      RowBox[{"(*", 
        RowBox[{
-        RowBox[{
-         RowBox[{"keyMask", "[", 
-          RowBox[{"[", 
-           RowBox[{
-            RowBox[{"4", "*", "j"}], "+", "2"}], "]"}], "]"}], "=", 
-         RowBox[{"U", "[", 
-          RowBox[{"[", 
-           RowBox[{"j", "+", "1"}], "]"}], "]"}]}], ",", 
-        RowBox[{"{", 
-         RowBox[{"j", ",", "0", ",", "15"}], "}"}]}], "  ", 
-       "\[IndentingNewLine]", "  ", "]"}], ";", "\[IndentingNewLine]", 
-      "\[IndentingNewLine]", 
-      RowBox[{"BitXor", "[", 
-       RowBox[{"state64", ",", "keyMask"}], "]"}]}]}], 
-    RowBox[{"(*", 
+        RowBox[{"Rounds", " ", "17"}], "-", "28"}], "*)"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GenerateRoundConstants", "[", "]"}], ":=", 
+    RowBox[{"Map", "[", 
      RowBox[{
-     "xor", " ", "fra", " ", "stato", " ", "e", " ", "maschera", " ", 
-      "generata"}], "*)"}], "\[IndentingNewLine]", "]"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]"}]}]], "Input",
- CellChangeTimes->{{3.999448444986906*^9, 3.999448444986906*^9}, {
-   3.999448521100622*^9, 3.999448551492033*^9}, {3.999448609095579*^9, 
-   3.999448661876152*^9}, 3.999450200035612*^9, {3.9994502640770073`*^9, 
-   3.999450270334303*^9}, 3.9994503240408306`*^9, {3.999450443111025*^9, 
-   3.99945044391712*^9}, {3.999450670308214*^9, 3.9994507107672653`*^9}, {
-   3.999450971372961*^9, 3.9994509813188*^9}, {3.9994511778492584`*^9, 
-   3.9994511975815125`*^9}, {3.9994512361788635`*^9, 
-   3.9994512626058846`*^9}, {3.9994516671742706`*^9, 3.9994516726462*^9}, {
-   3.999451810055353*^9, 
-   3.999451839161043*^9}},ExpressionUUID->"f5d3f299-bf78-1f4d-9c65-\
-4ab4f56b4c18"]
+      RowBox[{
+       RowBox[{"IntegerDigits", "[", 
+        RowBox[{
+         RowBox[{"FromDigits", "[", 
+          RowBox[{"#", ",", "16"}], "]"}], ",", "2", ",", "6"}], "]"}], "&"}],
+       ",", "hexConstants"}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"AddRoundKey", "[", 
+     RowBox[{"state64_List", ",", "U_List", ",", "V_List", ",", "RC_List"}], 
+     "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"keyMask", ",", "rcMask"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"keyMask", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{"0", ",", 
+          RowBox[{"{", "64", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"rcMask", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{"0", ",", 
+          RowBox[{"{", "64", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"keyMask", "[", 
+           RowBox[{"[", 
+            RowBox[{
+             RowBox[{"4", "*", "j"}], "+", "1"}], "]"}], "]"}], "=", 
+          RowBox[{"V", "[", 
+           RowBox[{"[", 
+            RowBox[{"j", "+", "1"}], "]"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "0", ",", "15"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"keyMask", "[", 
+           RowBox[{"[", 
+            RowBox[{
+             RowBox[{"4", "*", "j"}], "+", "2"}], "]"}], "]"}], "=", 
+          RowBox[{"U", "[", 
+           RowBox[{"[", 
+            RowBox[{"j", "+", "1"}], "]"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "0", ",", "15"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"rcMask", "[", 
+           RowBox[{"[", 
+            RowBox[{
+             RowBox[{"4", "*", 
+              RowBox[{"(", 
+               RowBox[{"j", "-", "1"}], ")"}]}], "+", "4"}], "]"}], "]"}], "=", 
+          RowBox[{"RC", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "1", ",", "6"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"rcMask", "[", 
+         RowBox[{"[", "64", "]"}], "]"}], "=", "1"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"BitXor", "[", 
+        RowBox[{"state64", ",", "keyMask", ",", "rcMask"}], "]"}]}]}], 
+     "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"2.", " ", "Test", " ", "e", " ", "Verifica", " ", "Output"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"masterKey", "=", 
+     RowBox[{"RandomInteger", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "1"}], "}"}], ",", "128"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"state", "=", 
+     RowBox[{"RandomInteger", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "1"}], "}"}], ",", "64"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"allRoundKeys", "=", 
+     RowBox[{"GenerateAllRoundKeys", "[", "masterKey", "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"allRC", "=", 
+     RowBox[{"GenerateRoundConstants", "[", "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"U1", ",", "V1"}], "}"}], "=", 
+     RowBox[{"allRoundKeys", "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"RC1", "=", 
+     RowBox[{"allRC", "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"stateDopoRound1", "=", 
+     RowBox[{"AddRoundKey", "[", 
+      RowBox[{"state", ",", "U1", ",", "V1", ",", "RC1"}], "]"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Numero di sottochiavi generate: \>\"", ",", 
+      RowBox[{"Length", "[", "allRoundKeys", "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Numero di costanti RC generate: \>\"", ",", 
+      RowBox[{"Length", "[", "allRC", "]"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Dimensione stato finale:        \>\"", ",", 
+      RowBox[{"Length", "[", "stateDopoRound1", "]"}]}], "]"}], 
+    ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.9994904208744564`*^9, 3.9994904315371876`*^9}, {
+  3.999490892555273*^9, 3.9994908930319576`*^9}, {3.999491096614765*^9, 
+  3.999491125763384*^9}},
+ CellLabel->"In[67]:=",ExpressionUUID->"56ad1849-7bad-9f4f-a6e1-b9ad4e8a06ec"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Numero di sottochiavi generate: \"\>", "\[InvisibleSpace]", 
+   "28"}],
+  SequenceForm["Numero di sottochiavi generate: ", 28],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.999490425065027*^9, {3.999491146522188*^9, 3.99949116086215*^9}},
+ CellLabel->
+  "During evaluation of \
+In[67]:=",ExpressionUUID->"67a7fda8-7142-d44f-b436-2f768ec95eb0"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Numero di costanti RC generate: \"\>", "\[InvisibleSpace]", 
+   "28"}],
+  SequenceForm["Numero di costanti RC generate: ", 28],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.999490425065027*^9, {3.999491146522188*^9, 3.9994911608780766`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[67]:=",ExpressionUUID->"e4234ba5-34b8-6e45-adb7-deaa543f90b8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Dimensione stato finale:        \"\>", "\[InvisibleSpace]", 
+   "64"}],
+  SequenceForm["Dimensione stato finale:        ", 64],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.999490425065027*^9, {3.999491146522188*^9, 3.9994911608780766`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[67]:=",ExpressionUUID->"3ba41621-0b66-3c4a-99ed-e43f96f61d90"]
+}, Open  ]]
+}, Open  ]]
 },
-WindowSize->{949, 521},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{960, 532},
+WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
+Magnification:>0.9 Inherited,
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"7ff9c60f-99a7-7145-b63c-9a37662c5070"
@@ -162,7 +282,14 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 5139, 125, 675, "Input",ExpressionUUID->"f5d3f299-bf78-1f4d-9c65-4ab4f56b4c18"]
+Cell[CellGroupData[{
+Cell[576, 22, 7860, 202, 744, "Input",ExpressionUUID->"56ad1849-7bad-9f4f-a6e1-b9ad4e8a06ec"],
+Cell[CellGroupData[{
+Cell[8461, 228, 401, 10, 19, "Print",ExpressionUUID->"67a7fda8-7142-d44f-b436-2f768ec95eb0"],
+Cell[8865, 240, 404, 10, 19, "Print",ExpressionUUID->"e4234ba5-34b8-6e45-adb7-deaa543f90b8"],
+Cell[9272, 252, 404, 10, 19, "Print",ExpressionUUID->"3ba41621-0b66-3c4a-99ed-e43f96f61d90"]
+}, Open  ]]
+}, Open  ]]
 }
 ]
 *)
