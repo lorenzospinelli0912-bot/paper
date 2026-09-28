@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     15880,        402]
-NotebookOptionsPosition[     15401,        386]
-NotebookOutlinePosition[     15826,        403]
-CellTagsIndexPosition[     15783,        400]
+NotebookDataLength[     16172,        407]
+NotebookOptionsPosition[     15693,        391]
+NotebookOutlinePosition[     16118,        408]
+CellTagsIndexPosition[     16075,        405]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -24,14 +24,14 @@ Cell[BoxData[
    RowBox[{
    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", 
-    "=="}], "*)"}], "\[IndentingNewLine]", 
+    "=="}], "*)"}], "\[IndentingNewLine]", "\t\t", 
   RowBox[{
    RowBox[{"GiftSBox", "=", 
     RowBox[{"{", 
      RowBox[{
      "1", ",", "10", ",", "4", ",", "12", ",", "6", ",", "15", ",", "3", ",", 
       "9", ",", "2", ",", "13", ",", "11", ",", "7", ",", "5", ",", "0", ",", 
-      "8", ",", "14"}], "}"}]}], "\n", 
+      "8", ",", "14"}], "}"}]}], "\n", "\t", 
    RowBox[{
     RowBox[{"GiftPermutation", "=", 
      RowBox[{"Table", "[", 
@@ -52,7 +52,8 @@ Cell[BoxData[
         RowBox[{"Mod", "[", 
          RowBox[{"i", ",", "4"}], "]"}], "+", "1"}], ",", 
        RowBox[{"{", 
-        RowBox[{"i", ",", "0", ",", "63"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+        RowBox[{"i", ",", "0", ",", "63"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]",
+    "\t", 
    RowBox[{
     RowBox[{"GiftRoundConstants", "=", 
      RowBox[{"{", 
@@ -63,38 +64,38 @@ Cell[BoxData[
        "16^^27", ",", "16^^0E", ",", "16^^1D", ",", "16^^3A", ",", "16^^35", ",",
         "16^^2B", ",", "16^^16", ",", "16^^2C", ",", "16^^18", ",", "16^^30", 
        ",", "16^^21", ",", "16^^02", ",", "16^^05", ",", "16^^0B"}], "}"}]}], 
-    ";"}], " ", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+    ";"}], " ", "\[IndentingNewLine]", "\t", "\[IndentingNewLine]", "\t", 
+   "\[IndentingNewLine]", "\t", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{
      "Funzioni", " ", "di", " ", "utilit\[AGrave]", " ", "per", " ", 
       "conversione", " ", "Stato"}], "<->", 
-     RowBox[{"Bit", "/", "Nibble"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"Bit", "/", "Nibble"}]}], "*)"}], "\[IndentingNewLine]", "\t", 
    RowBox[{
     RowBox[{
      RowBox[{"StateToBits", "[", "state_Integer", "]"}], ":=", 
      RowBox[{"IntegerDigits", "[", 
-      RowBox[{"state", ",", "2", ",", "64"}], "]"}]}], ";"}], "\n", 
+      RowBox[{"state", ",", "2", ",", "64"}], "]"}]}], ";"}], "\n", "\t", 
    RowBox[{
     RowBox[{
      RowBox[{"BitsToState", "[", "bits_List", "]"}], ":=", 
      RowBox[{"FromDigits", "[", 
-      RowBox[{"bits", ",", "2"}], "]"}]}], ";"}], "\n", 
+      RowBox[{"bits", ",", "2"}], "]"}]}], ";"}], "\n", "\t", 
    RowBox[{
     RowBox[{
      RowBox[{"StateToNibbles", "[", "state_Integer", "]"}], ":=", 
      RowBox[{"IntegerDigits", "[", 
-      RowBox[{"state", ",", "16", ",", "16"}], "]"}]}], ";"}], "\n", 
+      RowBox[{"state", ",", "16", ",", "16"}], "]"}]}], ";"}], "\n", "\t", 
    RowBox[{
     RowBox[{
      RowBox[{"NibblesToState", "[", "nibbles_List", "]"}], ":=", 
      RowBox[{"FromDigits", "[", 
-      RowBox[{"nibbles", ",", "16"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+      RowBox[{"nibbles", ",", "16"}], "]"}]}], ";"}], "\n", "\t", 
+   "\[IndentingNewLine]", "\t", 
    RowBox[{"(*", 
     RowBox[{"S", "-", 
-     RowBox[{"box", " ", "Layer"}]}], "*)"}], "\n", 
+     RowBox[{"box", " ", "Layer"}]}], "*)"}], "\[IndentingNewLine]", "\t", 
    RowBox[{
     RowBox[{
      RowBox[{"SubCells", "[", "state_Integer", "]"}], ":=", 
@@ -106,7 +107,7 @@ Cell[BoxData[
           RowBox[{"[", 
            RowBox[{"#", "+", "1"}], "]"}], "]"}], "&"}], ",", 
         RowBox[{"StateToNibbles", "[", "state", "]"}]}], "]"}], "]"}]}], 
-    ";"}], "\[IndentingNewLine]", 
+    ";"}], "\[IndentingNewLine]", "\t", 
    RowBox[{"(*", 
     RowBox[{
      RowBox[{"qui", " ", "mette", " ", "a", " ", "posto", " ", 
@@ -114,7 +115,8 @@ Cell[BoxData[
        "#"}], "+", 
      RowBox[{
      "1", " ", "e", " ", "poi", " ", "applica", " ", "la", " ", "giftbox", " ",
-       "al", " ", "messaggio"}]}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       "al", " ", "messaggio"}]}], "*)"}], "\[IndentingNewLine]", "\t", "\[IndentingNewLine]",
+    "\t", 
    RowBox[{
     RowBox[{
      RowBox[{"PermBits", "[", "state_Integer", "]"}], ":=", 
@@ -123,8 +125,9 @@ Cell[BoxData[
        RowBox[{
         RowBox[{"Reverse", "[", 
          RowBox[{"StateToBits", "[", "state", "]"}], "]"}], "[", 
-        RowBox[{"[", "GiftPermutation", "]"}], "]"}], "]"}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", " ", 
+        RowBox[{"[", 
+         RowBox[{"Ordering", "[", "GiftPermutation", "]"}], "]"}], "]"}], 
+       "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", "\t ", 
    RowBox[{"(*", 
     RowBox[{
     "qui", " ", "il", " ", "messaggio", " ", "lo", " ", "inverto", " ", "poi",
@@ -212,7 +215,7 @@ Cell[BoxData[
                     "**"}], "**"}], "**"}], "**"}], "**"}], "**"}], "**"}], 
              "**"}], "**"}], "**"}], "**"}], "**"}], "**"}], "**"}], "**"}], 
      "**"}], "******)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\t\t", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"InitializeKeySchedule", "[", "masterKey128_List", "]"}], ":=", 
     RowBox[{"Partition", "[", 
@@ -289,8 +292,8 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"FromDigits", "[", 
           RowBox[{"#", ",", "16"}], "]"}], ",", "2", ",", "6"}], "]"}], "&"}],
-       ",", "hexConstants"}], "]"}]}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+       ",", "hexConstants"}], "]"}]}], "\[IndentingNewLine]", "\n", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"AddRoundKey", "[", 
      RowBox[{"state64_List", ",", "U_List", ",", "V_List", ",", "RC_List"}], 
@@ -373,8 +376,10 @@ Cell[BoxData[
    3.9994912676232376`*^9}, {3.9994914065096817`*^9, 3.999491406683918*^9}, {
    3.9994915609171124`*^9, 3.9994915640818596`*^9}, {3.9994915975277576`*^9, 
    3.9994915980930443`*^9}, {3.999491910459635*^9, 3.999491913358244*^9}, 
-   3.9994923245634937`*^9, {3.9994929374000454`*^9, 
-   3.999492939501753*^9}},ExpressionUUID->"fb238bf4-6f79-3c43-8d2d-\
+   3.9994923245634937`*^9, {3.9994929374000454`*^9, 3.999492939501753*^9}, {
+   3.9995032733583965`*^9, 3.9995032744998417`*^9}, {3.9995033847526283`*^9, 
+   3.9995033851269817`*^9}, 
+   3.999506038326357*^9},ExpressionUUID->"fb238bf4-6f79-3c43-8d2d-\
 70f9082a6c4c"],
 
 Cell[BoxData[
@@ -402,8 +407,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 14604, 357, 1104, "Input",ExpressionUUID->"fb238bf4-6f79-3c43-8d2d-70f9082a6c4c"],
-Cell[15161, 379, 236, 5, 76, "Input",ExpressionUUID->"c8ba5882-6857-9f4b-b472-2e505526bdfc"]
+Cell[554, 20, 14896, 362, 1121, "Input",ExpressionUUID->"fb238bf4-6f79-3c43-8d2d-70f9082a6c4c"],
+Cell[15453, 384, 236, 5, 76, "Input",ExpressionUUID->"c8ba5882-6857-9f4b-b472-2e505526bdfc"]
 }
 ]
 *)
