@@ -1,0 +1,669 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     25154,        661]
+NotebookOptionsPosition[     24434,        640]
+NotebookOutlinePosition[     24835,        656]
+CellTagsIndexPosition[     24792,        653]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"GiftSBox", "=", 
+    RowBox[{"{", 
+     RowBox[{
+     "1", ",", "10", ",", "4", ",", "12", ",", "6", ",", "15", ",", "3", ",", 
+      "9", ",", "2", ",", "13", ",", "11", ",", "7", ",", "5", ",", "0", ",", 
+      "8", ",", "14"}], "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GiftPermutation", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"4", "*", 
+        RowBox[{"Floor", "[", 
+         RowBox[{"i", "/", "16"}], "]"}]}], "+", 
+       RowBox[{"16", "*", 
+        RowBox[{"Mod", "[", 
+         RowBox[{
+          RowBox[{"3", "*", 
+           RowBox[{"Floor", "[", 
+            RowBox[{
+             RowBox[{"Mod", "[", 
+              RowBox[{"i", ",", "16"}], "]"}], "/", "4"}], "]"}]}], ",", 
+          "4"}], "]"}]}], "+", 
+       RowBox[{"Mod", "[", 
+        RowBox[{"i", ",", "4"}], "]"}], "+", "1"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "0", ",", "63"}], "}"}]}], "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hexConstants", "=", 
+    RowBox[{"{", 
+     RowBox[{"\"\<00\>\"", ",", "\"\<01\>\"", ",", "\"\<03\>\"", 
+      ",", "\"\<07\>\"", ",", "\"\<0F\>\"", ",", "\"\<1F\>\"", 
+      ",", "\"\<3E\>\"", ",", "\"\<3D\>\"", ",", "\"\<3B\>\"", 
+      ",", "\"\<37\>\"", ",", "\"\<2F\>\"", ",", "\"\<1E\>\"", 
+      ",", "\"\<3C\>\"", ",", "\"\<39\>\"", ",", "\"\<33\>\"", 
+      ",", "\"\<27\>\"", ",", "\"\<0E\>\"", ",", "\"\<1D\>\"", 
+      ",", "\"\<3A\>\"", ",", "\"\<35\>\"", ",", "\"\<2B\>\"", 
+      ",", "\"\<16\>\"", ",", "\"\<2C\>\"", ",", "\"\<18\>\"", 
+      ",", "\"\<30\>\"", ",", "\"\<21\>\"", ",", "\"\<02\>\"", 
+      ",", "\"\<05\>\""}], "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"plaintext", "=", "\"\<fedcba9876543210\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"stato1", "=", 
+    RowBox[{"FromDigits", "[", 
+     RowBox[{"\"\<fedcba9876543210\>\"", ",", "16"}], "]"}]}], ";"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"mi", " ", "da", " ", "un", " ", "intero"}], "*)"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SubcellFunction", "[", "stato1_Integer", "]"}], ":=", 
+    RowBox[{"FromDigits", "[", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"GiftSBox", "[", 
+          RowBox[{"[", 
+           RowBox[{"#", "+", "1"}], "]"}], "]"}], "&"}], ",", 
+        RowBox[{"IntegerDigits", "[", 
+         RowBox[{"stato1", ",", "16", ",", "16"}], "]"}]}], "]"}], ",", 
+      "16"}], "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"permutazioneFunction", "[", "stato1_Integer", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"IntegerDigits", "[", 
+      RowBox[{"stato1", ",", "2", ",", "64"}], "]"}], "[", 
+     RowBox[{"[", "GiftPermutation", "]"}], "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"key", "=", "\"\<fedcba9876543210fedcba9876543210\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ottoKey", "=", 
+    RowBox[{"Partition", "[", 
+     RowBox[{
+      RowBox[{"IntegerDigits", "[", 
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{"key", ",", "16"}], "]"}], ",", "2", ",", "128"}], "]"}], ",",
+       "16"}], "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"aggiornaChiave", "[", 
+     RowBox[{"{", 
+      RowBox[{
+      "k7_", ",", "k6_", ",", "k5_", ",", "k4_", ",", "k3_", ",", "k2_", ",", 
+       "k1_", ",", "k0_"}], "}"}], "]"}], ":=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"RotateRight", "[", 
+       RowBox[{"k1", ",", "2"}], "]"}], ",", 
+      RowBox[{"RotateRight", "[", 
+       RowBox[{"k0", ",", "12"}], "]"}], ",", "k7", ",", "k6", ",", "k5", ",",
+       "k4", ",", "k3", ",", "k2"}], "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"eseguiRoundGIFT", "[", 
+     RowBox[{"stato_List", ",", "chiave_List", ",", "hexRC_String"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"st", "=", "stato"}], ",", 
+        RowBox[{"k", "=", "chiave"}], ",", "U", ",", "V", ",", "rc", ",", 
+        RowBox[{"posizioniRC", "=", 
+         RowBox[{"{", 
+          RowBox[{"24", ",", "20", ",", "16", ",", "12", ",", "8", ",", "4"}],
+           "}"}]}]}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"st", "=", 
+        RowBox[{"permutazioneFunction", "[", 
+         RowBox[{"SubcellFunction", "[", 
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"st", ",", "2"}], "]"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"U", "=", 
+        RowBox[{"k", "[", 
+         RowBox[{"[", "7", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"V", "=", 
+        RowBox[{"k", "[", 
+         RowBox[{"[", "8", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Step", " ", "3"}], ":", 
+         RowBox[{"XOR", " ", "Sottochiavi"}]}], "*)"}], 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"st", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"4", "*", "i"}], "+", "2"}], "]"}], "]"}], "=", 
+           RowBox[{"BitXor", "[", 
+            RowBox[{
+             RowBox[{"st", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{"4", "*", "i"}], "+", "2"}], "]"}], "]"}], ",", 
+             RowBox[{"U", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"st", "[", 
+            RowBox[{"[", 
+             RowBox[{
+              RowBox[{"4", "*", "i"}], "+", "1"}], "]"}], "]"}], "=", 
+           RowBox[{"BitXor", "[", 
+            RowBox[{
+             RowBox[{"st", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{"4", "*", "i"}], "+", "1"}], "]"}], "]"}], ",", 
+             RowBox[{"V", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "]"}]}], ";"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "0", ",", "15"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Step", " ", "4"}], ":", 
+         RowBox[{"XOR", " ", "Costante", " ", "RC"}]}], "*)"}], 
+       RowBox[{"rc", "=", 
+        RowBox[{"IntegerDigits", "[", 
+         RowBox[{
+          RowBox[{"FromDigits", "[", 
+           RowBox[{"hexRC", ",", "16"}], "]"}], ",", "2", ",", "6"}], "]"}]}],
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"Do", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"st", "[", 
+            RowBox[{"[", 
+             RowBox[{"posizioniRC", "[", 
+              RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}], "=", 
+           RowBox[{"BitXor", "[", 
+            RowBox[{
+             RowBox[{"st", "[", 
+              RowBox[{"[", 
+               RowBox[{"posizioniRC", "[", 
+                RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}], ",", 
+             RowBox[{"rc", "[", 
+              RowBox[{"[", "j", "]"}], "]"}]}], "]"}]}], ";"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "1", ",", "6"}], "}"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"st", "[", 
+         RowBox[{"[", "64", "]"}], "]"}], "=", 
+        RowBox[{"BitXor", "[", 
+         RowBox[{
+          RowBox[{"st", "[", 
+           RowBox[{"[", "64", "]"}], "]"}], ",", "1"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"st", "[", 
+         RowBox[{"[", "24", "]"}], "]"}], "=", 
+        RowBox[{"BitXor", "[", 
+         RowBox[{
+          RowBox[{"st", "[", 
+           RowBox[{"[", "24", "]"}], "]"}], ",", "1"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"k", "=", 
+        RowBox[{"aggiornaChiave", "[", "k", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"st", ",", "k"}], "}"}]}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Passiamo", " ", "lo", " ", "stato", " ", "iniziale", " ", "direttamente", 
+    " ", "come", " ", "lista", " ", "di", " ", "64", " ", "bit"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"statoInizialeBits", "=", 
+    RowBox[{"IntegerDigits", "[", 
+     RowBox[{"stato1", ",", "2", ",", "64"}], "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"storicoRound", "=", 
+    RowBox[{"FoldList", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"eseguiRoundGIFT", "[", 
+        RowBox[{
+         RowBox[{"#1", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ",", 
+         RowBox[{"#1", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], ",", "#2"}], "]"}], "&"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"statoInizialeBits", ",", "ottoKey"}], "}"}], ",", 
+      "hexConstants"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"storicoRound", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{"Mappatura", " ", "pulita", " ", "e", " ", "diretta"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Map", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"IntegerString", "[", 
+     RowBox[{
+      RowBox[{"FromDigits", "[", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", "2"}], "]"}], ",", "16", ",", 
+      "16"}], "]"}], "&"}], ",", "storicoRound"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.999762148959545*^9, 3.9997621901008797`*^9}, {
+  3.9997623228805294`*^9, 3.999762337358242*^9}, {3.999762467522579*^9, 
+  3.999762470172207*^9}},
+ CellLabel->"In[46]:=",ExpressionUUID->"4289902a-af6b-9d49-ab85-0b3100ea2494"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"fedcba9876543210\"\>", ",", "\<\"e85b81fb0ef15563\"\>", 
+   ",", "\<\"5bdeea4a37e2b8a6\"\>", ",", "\<\"e204775b0f8a874a\"\>", 
+   ",", "\<\"57c58c29d223afb6\"\>", ",", "\<\"ea97db491740f740\"\>", 
+   ",", "\<\"1f756cdb162215d0\"\>", ",", "\<\"ab36bb39d044f5ca\"\>", 
+   ",", "\<\"2ed2ab5b0528bfa0\"\>", ",", "\<\"52129ab30f8745a2\"\>", 
+   ",", "\<\"23059baf6fef8019\"\>", ",", "\<\"5724c5a31e43f96b\"\>", 
+   ",", "\<\"3bbc48cb87a3a349\"\>", ",", "\<\"cf336c1e32311dca\"\>", 
+   ",", "\<\"ce867089010e0be5\"\>", ",", "\<\"441d972d6c967f80\"\>", 
+   ",", "\<\"fc69ee956610c17d\"\>", ",", "\<\"e0a55fb83de1d45e\"\>", 
+   ",", "\<\"5452c38e7bcb3ce3\"\>", ",", "\<\"f91871fcfc1e4839\"\>", 
+   ",", "\<\"327506da68e2e9c4\"\>", ",", "\<\"99b4492f9584b2c6\"\>", 
+   ",", "\<\"160241b1f560a7a3\"\>", ",", "\<\"eb733df61b330897\"\>", 
+   ",", "\<\"4169e73c1d8a0d0e\"\>", ",", "\<\"65e0b40d35a4dc70\"\>", 
+   ",", "\<\"e48f31f24d39d5a5\"\>", ",", "\<\"85246a0e2f46eb11\"\>", 
+   ",", "\<\"fc1b32ef8ee9aefd\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.999762154244089*^9, 3.9997621923470135`*^9}, 
+   3.9997622897262383`*^9, {3.99976232849658*^9, 3.999762337693939*^9}, 
+   3.9997624725983944`*^9},
+ CellLabel->"Out[60]=",ExpressionUUID->"4758a650-ee7a-114d-bba8-4b06ccf58114"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"-", "PARAMETRI"}]}], " ", "E", " ", "TABELLE", " ", 
+     RowBox[{"INVERSE", "--"}]}], "-"}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"1.", " ", "S"}], "-", 
+    RowBox[{"Box", " ", "Inversa", " ", "per", " ", "GIFT"}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"GiftSBoxInv", "=", 
+     RowBox[{
+      RowBox[{"InversePermutation", "[", 
+       RowBox[{"GiftSBox", "+", "1"}], "]"}], "-", "1"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "2.", " ", "Permutazione", " ", "Inversa", " ", "dei", " ", "Bit"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"GiftPermutationInv", "=", 
+     RowBox[{"InversePermutation", "[", "GiftPermutation", "]"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"3.", " ", "Costanti", " ", "di", " ", "Round", " ", "Inverse", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"nell", "'"}], "ordine", " ", "opposto"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hexConstantsInv", "=", 
+     RowBox[{"Reverse", "[", "hexConstants", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "FUNZIONI"}]}], " ", "INVERSE", " ", "PER", " ", "LO", " ", 
+      RowBox[{"STATO", "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SubcellFunctionInv", "[", "stato1_Integer", "]"}], ":=", 
+     RowBox[{"FromDigits", "[", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"GiftSBoxInv", "[", 
+           RowBox[{"[", 
+            RowBox[{"#", "+", "1"}], "]"}], "]"}], "&"}], ",", 
+         RowBox[{"IntegerDigits", "[", 
+          RowBox[{"stato1", ",", "16", ",", "16"}], "]"}]}], "]"}], ",", 
+       "16"}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"permutazioneFunctionInv", "[", "bits_List", "]"}], ":=", 
+     RowBox[{"bits", "[", 
+      RowBox[{"[", "GiftPermutationInv", "]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "FUNZIONE"}]}], " ", "INVERSA", " ", "PER", " ", "LA", " ", 
+      RowBox[{"CHIAVE", "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Inverte", " ", "esattamente", " ", "le", " ", "operazioni", " ", "di", " ",
+      "aggiornaChiave"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"aggiornaChiaveInv", "[", 
+      RowBox[{"{", 
+       RowBox[{
+       "k7_", ",", "k6_", ",", "k5_", ",", "k4_", ",", "k3_", ",", "k2_", ",",
+         "k1_", ",", "k0_"}], "}"}], "]"}], ":=", 
+     RowBox[{"{", 
+      RowBox[{"k5", ",", "k4", ",", "k3", ",", "k2", ",", "k1", ",", "k0", ",", 
+       RowBox[{"RotateLeft", "[", 
+        RowBox[{"k7", ",", "2"}], "]"}], ",", 
+       RowBox[{"RotateLeft", "[", 
+        RowBox[{"k6", ",", "12"}], "]"}]}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "FUNZIONE"}]}], " ", "ROUND", " ", "DI", " ", 
+      RowBox[{"DECIFRATURA", "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"eseguiRoundGIFTInv", "[", 
+      RowBox[{"stato_List", ",", "chiave_List", ",", "hexRC_String"}], "]"}], 
+     ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"st", "=", "stato"}], ",", 
+         RowBox[{"k", "=", "chiave"}], ",", "U", ",", "V", ",", "rc", ",", 
+         RowBox[{"posizioniRC", "=", 
+          RowBox[{"{", 
+           RowBox[{
+           "24", ",", "20", ",", "16", ",", "12", ",", "8", ",", "4"}], 
+           "}"}]}]}], "}"}], ",", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Step", " ", "1"}], ":", 
+         RowBox[{
+         "Arretriamo", " ", "la", " ", "chiave", " ", "al", " ", "round", " ",
+           "corrente", " ", "prima", " ", "di", " ", "usarla"}]}], "*)"}], 
+       RowBox[{
+        RowBox[{"k", "=", 
+         RowBox[{"aggiornaChiaveInv", "[", "k", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"U", "=", 
+         RowBox[{"k", "[", 
+          RowBox[{"[", "7", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"V", "=", 
+         RowBox[{"k", "[", 
+          RowBox[{"[", "8", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Step", " ", "2"}], ":", 
+          RowBox[{"Rimuoviamo", " ", "la", " ", "Costante", " ", "RC", " ", 
+           RowBox[{"(", 
+            RowBox[{"XOR", " ", "Inverso"}], ")"}]}]}], "*)"}], 
+        RowBox[{"rc", "=", 
+         RowBox[{"IntegerDigits", "[", 
+          RowBox[{
+           RowBox[{"FromDigits", "[", 
+            RowBox[{"hexRC", ",", "16"}], "]"}], ",", "2", ",", "6"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"st", "[", 
+          RowBox[{"[", "64", "]"}], "]"}], "=", 
+         RowBox[{"BitXor", "[", 
+          RowBox[{
+           RowBox[{"st", "[", 
+            RowBox[{"[", "64", "]"}], "]"}], ",", "1"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"st", "[", 
+          RowBox[{"[", "24", "]"}], "]"}], "=", 
+         RowBox[{"BitXor", "[", 
+          RowBox[{
+           RowBox[{"st", "[", 
+            RowBox[{"[", "24", "]"}], "]"}], ",", "1"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"st", "[", 
+             RowBox[{"[", 
+              RowBox[{"posizioniRC", "[", 
+               RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}], "=", 
+            RowBox[{"BitXor", "[", 
+             RowBox[{
+              RowBox[{"st", "[", 
+               RowBox[{"[", 
+                RowBox[{"posizioniRC", "[", 
+                 RowBox[{"[", "j", "]"}], "]"}], "]"}], "]"}], ",", 
+              RowBox[{"rc", "[", 
+               RowBox[{"[", "j", "]"}], "]"}]}], "]"}]}], ";"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"j", ",", "1", ",", "6"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Step", " ", "3"}], ":", 
+          RowBox[{
+          "Rimuoviamo", " ", "le", " ", "Sottochiavi", " ", "U", " ", "e", " ",
+            "V"}]}], "*)"}], 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"st", "[", 
+             RowBox[{"[", 
+              RowBox[{
+               RowBox[{"4", "*", "i"}], "+", "2"}], "]"}], "]"}], "=", 
+            RowBox[{"BitXor", "[", 
+             RowBox[{
+              RowBox[{"st", "[", 
+               RowBox[{"[", 
+                RowBox[{
+                 RowBox[{"4", "*", "i"}], "+", "2"}], "]"}], "]"}], ",", 
+              RowBox[{"U", "[", 
+               RowBox[{"[", 
+                RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "]"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"st", "[", 
+             RowBox[{"[", 
+              RowBox[{
+               RowBox[{"4", "*", "i"}], "+", "1"}], "]"}], "]"}], "=", 
+            RowBox[{"BitXor", "[", 
+             RowBox[{
+              RowBox[{"st", "[", 
+               RowBox[{"[", 
+                RowBox[{
+                 RowBox[{"4", "*", "i"}], "+", "1"}], "]"}], "]"}], ",", 
+              RowBox[{"V", "[", 
+               RowBox[{"[", 
+                RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "]"}]}], ";"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "0", ",", "15"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Step", " ", "4"}], ":", 
+          RowBox[{"Permutazione", " ", "dei", " ", "Bit", " ", "Inversa"}]}], 
+         "*)"}], 
+        RowBox[{"st", "=", 
+         RowBox[{"permutazioneFunctionInv", "[", "st", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Step", " ", "5"}], ":", 
+          RowBox[{"Subcell", " ", "Inversa", " ", 
+           RowBox[{"(", 
+            RowBox[{"S", "-", "Box"}], ")"}]}]}], "*)"}], 
+        RowBox[{"st", "=", 
+         RowBox[{"IntegerDigits", "[", 
+          RowBox[{
+           RowBox[{"SubcellFunctionInv", "[", 
+            RowBox[{"FromDigits", "[", 
+             RowBox[{"st", ",", "2"}], "]"}], "]"}], ",", "2", ",", "64"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"st", ",", "k"}], "}"}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "ESECUZIONE"}]}], " ", "DELLA", " ", 
+      RowBox[{"DECIFRATURA", "--"}]}], "-"}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Prendiamo", " ", "il", " ", "testo", " ", "cifrato", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"l", "'"}], "ultimo", " ", "stato", " ", "ottenuto", " ", 
+       "dalla", " ", "cifratura"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"ciphertextBits", "=", 
+     RowBox[{"storicoRound", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "La", " ", "chiave", " ", "finale", " ", "lasciata", " ", "dal", " ", 
+     "ciclo", " ", "di", " ", "cifratura"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"chiaveFinale", "=", 
+     RowBox[{"storicoRound", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "2"}], "]"}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Ciclo", " ", "di", " ", "decifratura", " ", "con", " ", "FoldList"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"storicoRoundDec", "=", 
+     RowBox[{"FoldList", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"eseguiRoundGIFTInv", "[", 
+         RowBox[{
+          RowBox[{"#1", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{"#1", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", "#2"}], "]"}], "&"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"ciphertextBits", ",", "chiaveFinale"}], "}"}], ",", 
+       "hexConstantsInv"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Output", " ", "formattato", " ", "in", " ", "esadecimale", " ", 
+     RowBox[{"(", 
+      RowBox[{
+      "dovrebbe", " ", "terminare", " ", "col", " ", "plaintext", " ", 
+       "iniziale"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"IntegerString", "[", 
+       RowBox[{
+        RowBox[{"FromDigits", "[", 
+         RowBox[{
+          RowBox[{"#", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", "2"}], "]"}], ",", "16", ",", 
+        "16"}], "]"}], "&"}], ",", "storicoRoundDec"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.999762476174856*^9, 3.999762476736183*^9}},
+ CellLabel->"In[61]:=",ExpressionUUID->"fd20452f-5a4f-7243-9150-4ba83bebd757"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"fc1b32ef8ee9aefd\"\>", ",", "\<\"85246a0e2f46eb11\"\>", 
+   ",", "\<\"e48f31f24d39d5a5\"\>", ",", "\<\"65e0b40d35a4dc70\"\>", 
+   ",", "\<\"4169e73c1d8a0d0e\"\>", ",", "\<\"eb733df61b330897\"\>", 
+   ",", "\<\"160241b1f560a7a3\"\>", ",", "\<\"99b4492f9584b2c6\"\>", 
+   ",", "\<\"327506da68e2e9c4\"\>", ",", "\<\"f91871fcfc1e4839\"\>", 
+   ",", "\<\"5452c38e7bcb3ce3\"\>", ",", "\<\"e0a55fb83de1d45e\"\>", 
+   ",", "\<\"fc69ee956610c17d\"\>", ",", "\<\"441d972d6c967f80\"\>", 
+   ",", "\<\"ce867089010e0be5\"\>", ",", "\<\"cf336c1e32311dca\"\>", 
+   ",", "\<\"3bbc48cb87a3a349\"\>", ",", "\<\"5724c5a31e43f96b\"\>", 
+   ",", "\<\"23059baf6fef8019\"\>", ",", "\<\"52129ab30f8745a2\"\>", 
+   ",", "\<\"2ed2ab5b0528bfa0\"\>", ",", "\<\"ab36bb39d044f5ca\"\>", 
+   ",", "\<\"1f756cdb162215d0\"\>", ",", "\<\"ea97db491740f740\"\>", 
+   ",", "\<\"57c58c29d223afb6\"\>", ",", "\<\"e204775b0f8a874a\"\>", 
+   ",", "\<\"5bdeea4a37e2b8a6\"\>", ",", "\<\"e85b81fb0ef15563\"\>", 
+   ",", "\<\"fedcba9876543210\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.9997624807046185`*^9},
+ CellLabel->"Out[71]=",ExpressionUUID->"be69419d-7077-e84c-938c-d4f9815e2c2d"]
+}, Open  ]]
+},
+WindowSize->{960, 532},
+WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8c32b9d5-a802-164b-be33-b6c63b0677e1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 9934, 266, 846, "Input",ExpressionUUID->"4289902a-af6b-9d49-ab85-0b3100ea2494"],
+Cell[10513, 290, 1314, 20, 108, "Output",ExpressionUUID->"4758a650-ee7a-114d-bba8-4b06ccf58114"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11864, 315, 11362, 302, 960, "Input",ExpressionUUID->"fd20452f-5a4f-7243-9150-4ba83bebd757"],
+Cell[23229, 619, 1189, 18, 108, "Output",ExpressionUUID->"be69419d-7077-e84c-938c-d4f9815e2c2d"]
+}, Open  ]]
+}
+]
+*)
+
